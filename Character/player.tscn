@@ -305,6 +305,7 @@ sprite_frames = SubResource("SpriteFrames_q1ej8")
 animation = &"idle"
 autoplay = "idle"
 centered = false
+flip_h = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2)

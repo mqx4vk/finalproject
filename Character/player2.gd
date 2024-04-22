@@ -15,7 +15,7 @@ var direction : Vector2 = Vector2.ZERO
 var was_in_air : bool = false
 
 func _physics_process(delta):
-	if not active: 
+	if not active:
 		animated_sprite.hide()
 	# Add the gravity.
 	if not is_on_floor():
