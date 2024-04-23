@@ -1,6 +1,6 @@
-res://player2.tscn
 res://Levels/test_level.tscn
-res://Character/player.tscn
 res://Levels/test_level.gd
-res://Character/player2.gd
+res://Character/player.tscn
+res://player2.tscn
 res://Character/player.gd
+res://player_2.tscn

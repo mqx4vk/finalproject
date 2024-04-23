@@ -38,6 +38,7 @@ extends Node2D
 
 func _ready():
 	$Player2.active = false
+	pass
 	
 func _input(event):
 	if Input.is_action_pressed('player1'):
