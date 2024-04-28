@@ -34,21 +34,54 @@
 		#current_player.queue_free()
 		#current_player = load(player2_path).instance()
 		#add_child(current_player)
+		
+		
+		
+		
+		
+		
+		
+#extends Node2D
+#
+##func _ready():
+	##$Player2.active = false
+#
+#
+#func _input(event):
+	#if Input.is_action_pressed('player1'):
+		#$Player1/AnimatedSprite2D.show()
+		#$Player1.animated_sprite = $Player1/AnimatedSprite2D
+		#$Player1/robot.hide()
+	#if Input.is_action_pressed('player2'):
+		#$Player1.player1 = false
+		#$Player1/AnimatedSprite2D.hide()
+		#$Player1.animated_sprite = $Player1/robot
+		#$Player1/robot.show()
+		
+		
+		
+		
+		
 extends Node2D
 
-func _ready():
-	$Player2.active = false
-	pass
-	
 func _input(event):
 	if Input.is_action_pressed('player1'):
-		$Player1.active
-		$Player2/AnimatedSprite2D.hide()
 		$Player1/AnimatedSprite2D.show()
+		$Player1.animated_sprite = $Player1/AnimatedSprite2D
+		$Player1/robot.hide()
+		$Player1.player1 = true  # Reset to player1 state
+		reset_animation_state()  # Reset animation state
 	if Input.is_action_pressed('player2'):
-		$Player2.active = true
+		$Player1.player1 = false
 		$Player1/AnimatedSprite2D.hide()
-		$Player2/AnimatedSprite2D.show()
+		$Player1.animated_sprite = $Player1/robot
+		$Player1/robot.show()
+		reset_animation_state()  # Reset animation state
+
+func reset_animation_state():
+	$Player1.animated_sprite.stop()  # Stop the current animation
+	$Player1.animation_locked = false  # Reset animation lock
+
 		
 
 		

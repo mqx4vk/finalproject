@@ -13,10 +13,11 @@ var has_double_jumped : bool = false
 var animation_locked : bool = false
 var direction : Vector2 = Vector2.ZERO
 var was_in_air : bool = false
+var player1 = true
 
 func _physics_process(delta):
-	if not active:
-		animated_sprite.hide()
+	if player1:
+		$robot.hide()
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
@@ -81,9 +82,12 @@ func double_jump():
 
 func land():
 	animated_sprite.play("jump_end")
-	animation_locked = true
+	animation_locked = false
 
 func _on_animated_sprite_2d_animation_finished():
 	if(["jump_end", "jump_start", "jump_double"].has(animated_sprite.animation)):
 		animation_locked = false
 		
+func _on_robot_animation_finished():
+	if(["jump_end", "jump_start", "jump_double"].has(animated_sprite.animation)):
+		animation_locked = false
