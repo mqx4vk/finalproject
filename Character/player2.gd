@@ -30,16 +30,22 @@ func _physics_process(delta):
 			
 		was_in_air = false
 
+#Handle Shooting if Robot
+	if Input.is_action_just_pressed("shoot"):
+		if not player1:
+			shoot()
 	# Handle Jump.
 	if Input.is_action_just_pressed("jump"):
-		if is_on_floor():
-			# Normal jump from floor
+		if player1:
+			if is_on_floor():
+				# Normal jump from floor
+				jump()
+			elif not has_double_jumped:
+				# Double jump in air
+				double_jump()
+		else: 
 			jump()
-		elif not has_double_jumped:
-			# Double jump in air
-			double_jump()
-			
-
+		
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	direction = Input.get_vector("left", "right", "up", "down")
@@ -57,6 +63,9 @@ func update_animation():
 	if not animation_locked:
 		if not is_on_floor():
 			animated_sprite.play("jump_loop")
+		elif not player1 and Input.is_action_pressed("shoot"):
+			#ADD X WALKING HERE
+			animated_sprite.play("shoot")
 		else:
 			if direction.x != 0:
 				animated_sprite.play("run")
@@ -70,9 +79,14 @@ func update_facing_direction():
 		animated_sprite.flip_h = true
 		
 func jump():
-	velocity.y = jump_velocity
-	animated_sprite.play("jump_start")
-	animation_locked = true
+	if player1:
+		velocity.y = jump_velocity
+		animated_sprite.play("jump_start")
+		animation_locked = true
+	else: 
+		velocity.y = jump_velocity
+		animated_sprite.play("fly")
+		animation_locked = true
 	
 func double_jump():
 	velocity.y = double_jump_velocity
@@ -90,4 +104,8 @@ func _on_animated_sprite_2d_animation_finished():
 		
 func _on_robot_animation_finished():
 	if(["jump_end", "jump_start", "jump_double"].has(animated_sprite.animation)):
+		animation_locked = false
+
+func shoot():
+		animated_sprite.play("shoot")
 		animation_locked = false

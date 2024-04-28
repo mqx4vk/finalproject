@@ -66,10 +66,11 @@ extends Node2D
 
 func _input(event):
 	if Input.is_action_pressed('player1'):
+		$Player1.player1 = true
 		$Player1/AnimatedSprite2D.show()
 		$Player1.animated_sprite = $Player1/AnimatedSprite2D
 		$Player1/robot.hide()
-		$Player1.player1 = true  # Reset to player1 state
+		  # Reset to player1 state
 		reset_animation_state()  # Reset animation state
 	if Input.is_action_pressed('player2'):
 		$Player1.player1 = false

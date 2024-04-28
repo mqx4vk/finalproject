@@ -1450,5 +1450,5 @@ drag_horizontal_enabled = true
 drag_vertical_enabled = true
 
 [node name="Player1" parent="." instance=ExtResource("2_t7emj")]
-position = Vector2(21, 69)
+position = Vector2(21, 68)
 script = ExtResource("5_5tvap")

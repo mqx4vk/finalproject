@@ -1,4 +1,4 @@
-[gd_scene load_steps=75 format=3 uid="uid://xxaoff7gwbrm"]
+[gd_scene load_steps=81 format=3 uid="uid://xxaoff7gwbrm"]
 
 [ext_resource type="Texture2D" uid="uid://cf5vr3rdkcdr0" path="res://Art/Legacy-Fantasy - High Forest 2.3/Character/Idle/Idle-Sheet.png" id="1_uohqy"]
 [ext_resource type="Texture2D" uid="uid://bvqkoppprkbil" path="res://Art/Legacy-Fantasy - High Forest 2.3/Character/Run/Run-Sheet.png" id="2_c1ij0"]
@@ -43,7 +43,10 @@ func _physics_process(delta):
 			land()
 			
 		was_in_air = false
-
+#Handle Shooting if Robot
+	if Input.is_action_just_pressed(\"shoot\"):
+		if not player1:
+			shoot()
 	# Handle Jump.
 	if Input.is_action_just_pressed(\"jump\"):
 		if is_on_floor():
@@ -105,6 +108,9 @@ func _on_animated_sprite_2d_animation_finished():
 func _on_robot_animation_finished():
 	if([\"jump_end\", \"jump_start\", \"jump_double\"].has(animated_sprite.animation)):
 		animation_locked = false	
+
+func shoot():
+		animated_sprite.play(\"shoot\")
 "
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mgp67"]
@@ -504,6 +510,30 @@ region = Rect2(720, 342, 180, 171)
 atlas = ExtResource("6_xrt2r")
 region = Rect2(900, 342, 180, 171)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_75wi8"]
+atlas = ExtResource("6_xrt2r")
+region = Rect2(0, 513, 180, 171)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3bntw"]
+atlas = ExtResource("6_xrt2r")
+region = Rect2(180, 513, 180, 171)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_84dxe"]
+atlas = ExtResource("6_xrt2r")
+region = Rect2(360, 513, 180, 171)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gqaoe"]
+atlas = ExtResource("6_xrt2r")
+region = Rect2(540, 513, 180, 171)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jeua4"]
+atlas = ExtResource("6_xrt2r")
+region = Rect2(720, 513, 180, 171)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t50j6"]
+atlas = ExtResource("6_xrt2r")
+region = Rect2(900, 513, 180, 171)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_ut08p"]
 animations = [{
 "frames": [{
@@ -621,6 +651,29 @@ animations = [{
 "loop": true,
 "name": &"run",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_75wi8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3bntw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_84dxe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gqaoe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jeua4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t50j6")
+}],
+"loop": true,
+"name": &"shoot",
+"speed": 10.0
 }]
 
 [node name="Player" type="CharacterBody2D"]
@@ -631,7 +684,7 @@ position = Vector2(-32, -40)
 sprite_frames = SubResource("SpriteFrames_q1ej8")
 animation = &"idle"
 autoplay = "idle"
-frame_progress = 0.915216
+frame_progress = 0.76729
 centered = false
 flip_h = true
 
@@ -640,9 +693,11 @@ position = Vector2(0, 2)
 shape = SubResource("CapsuleShape2D_ry2ya")
 
 [node name="robot" type="AnimatedSprite2D" parent="."]
-position = Vector2(6, -19)
+position = Vector2(6, -27)
 scale = Vector2(0.694444, 0.722222)
 sprite_frames = SubResource("SpriteFrames_ut08p")
-animation = &"fly"
+animation = &"shoot"
+autoplay = "idle"
+frame_progress = 0.645203
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
