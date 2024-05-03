@@ -5,7 +5,9 @@ extends CharacterBody2D
 @export var double_jump_velocity : float = -200
 
 @onready var animated_sprite : AnimatedSprite2D = $AnimatedSprite2D
+@onready var Smile : TextureRect = $AnimatedSprite2D/Smile
 @onready var active = true
+
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -14,8 +16,13 @@ var animation_locked : bool = false
 var direction : Vector2 = Vector2.ZERO
 var was_in_air : bool = false
 var player1 = true
+var smile = false
 
 func _physics_process(delta):
+	if smile:
+		Smile.show()
+	else:
+		Smile.hide()
 	if player1:
 		$robot.hide()
 	# Add the gravity.
@@ -34,6 +41,11 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("shoot"):
 		if not player1:
 			shoot()
+		else:
+			if smile:
+				smile = false
+			else:
+				smile = true
 	# Handle Jump.
 	if Input.is_action_just_pressed("jump"):
 		if player1:

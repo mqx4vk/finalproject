@@ -64,7 +64,9 @@
 		
 extends Node2D
 
+
 func _input(event):
+
 	if Input.is_action_pressed('player1'):
 		$Player1.player1 = true
 		$Player1/AnimatedSprite2D.show()
@@ -78,11 +80,26 @@ func _input(event):
 		$Player1.animated_sprite = $Player1/robot
 		$Player1/robot.show()
 		reset_animation_state()  # Reset animation state
+		
 
 func reset_animation_state():
 	$Player1.animated_sprite.stop()  # Stop the current animation
 	$Player1.animation_locked = false  # Reset animation lock
 
-		
+var entered = false
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	if entered:
+		$Bee/Block.set_deferred("disabled", true)
+		$Bee/Smile.show()
+		$Bee/TextEdit.show()
+	else:
+		$Bee/Smile.hide()
+		$Bee/TextEdit.hide()
 
-		
+func _on_area_2d_body_entered(body):
+	if $Player1.player1 and $Player1.smile:
+		entered = true
+
+
+

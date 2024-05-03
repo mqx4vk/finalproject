@@ -1,4 +1,4 @@
-[gd_scene load_steps=81 format=3 uid="uid://xxaoff7gwbrm"]
+[gd_scene load_steps=82 format=3 uid="uid://xxaoff7gwbrm"]
 
 [ext_resource type="Texture2D" uid="uid://cf5vr3rdkcdr0" path="res://Art/Legacy-Fantasy - High Forest 2.3/Character/Idle/Idle-Sheet.png" id="1_uohqy"]
 [ext_resource type="Texture2D" uid="uid://bvqkoppprkbil" path="res://Art/Legacy-Fantasy - High Forest 2.3/Character/Run/Run-Sheet.png" id="2_c1ij0"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://cilbq1jmxocd0" path="res://Art/Legacy-Fantasy - High Forest 2.3/Character/Jumlp-All/Jump-All-Sheet.png" id="5_fhfe2"]
 [ext_resource type="Texture2D" uid="uid://c3q0esobpl6aj" path="res://Character/mech sprite 2.png" id="6_xrt2r"]
 [ext_resource type="Texture2D" uid="uid://bg641smpbvob5" path="res://Character/mech sprite.png" id="7_hchdf"]
+[ext_resource type="Texture2D" uid="uid://dekk1fhnavki5" path="res://Character/speech-bubble-smile-emoticon-face-vector-19459776.png" id="8_0cnne"]
 
 [sub_resource type="GDScript" id="GDScript_nhquf"]
 script/source = "extends CharacterBody2D
@@ -28,8 +29,14 @@ var has_double_jumped : bool = false
 var animation_locked : bool = false
 var direction : Vector2 = Vector2.ZERO
 var was_in_air : bool = false
+var smile = false
+
 
 func _physics_process(delta):
+	if smile:
+		$Smile.show()
+	else:
+		$Smile.hide()
 	if player1:
 		robot.hide()
 	# Add the gravity.
@@ -688,12 +695,20 @@ frame_progress = 0.76729
 centered = false
 flip_h = true
 
+[node name="Smile" type="TextureRect" parent="AnimatedSprite2D"]
+offset_left = 49.0
+offset_top = -2.0
+offset_right = 79.0
+offset_bottom = 26.0
+texture = ExtResource("8_0cnne")
+expand_mode = 1
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2)
 shape = SubResource("CapsuleShape2D_ry2ya")
 
 [node name="robot" type="AnimatedSprite2D" parent="."]
-position = Vector2(6, -27)
+position = Vector2(6, -25)
 scale = Vector2(0.694444, 0.722222)
 sprite_frames = SubResource("SpriteFrames_ut08p")
 animation = &"shoot"
