@@ -87,19 +87,69 @@ func reset_animation_state():
 	$Player1.animation_locked = false  # Reset animation lock
 
 var entered = false
+var near = false
+var begin = false
+var end = false
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if begin:
+		near = false
+		entered = false
+		end = false
+		$TextEdit5.show()
+	else:
+		$TextEdit5.hide()
+	if end:
+		$TextEdit6.show()
+	else:
+		$TextEdit6.hide()
 	if entered:
+		near = false
+		begin = false
+		end = false
 		$Bee/Block.set_deferred("disabled", true)
 		$Bee/Smile.show()
-		$Bee/TextEdit.show()
+		$TextEdit2.show()
+	elif near:
+		$Player1/Camera2D/TextEdit2.show()
+	#insert delay
+		$Player1/Camera2D/TextEdit3.show()
+		#$Player1/Camera2D/TextEdit4.show()
 	else:
 		$Bee/Smile.hide()
-		$Bee/TextEdit.hide()
+		$TextEdit2.hide()
+		$Player1/Camera2D/TextEdit2.hide()
+		$Player1/Camera2D/TextEdit3.hide()
+		#$Player1/Camera2D/TextEdit4.hide()
+		#$TextEdit5.hide()
 
 func _on_area_2d_body_entered(body):
 	if $Player1.player1 and $Player1.smile:
 		entered = true
+		near = false
+		end = false
+		#$Player1/Camera2D/TextEdit4.hide()
+		$Player1/Camera2D/TextEdit2.hide()
+		$Player1/Camera2D/TextEdit3.hide()
+	elif $Player1.player1:
+		near = false
+		#$Player1/Camera2D/TextEdit4.show()
+
+func _on_suggestions_body_entered(body):
+	near = true
+	
+func _on_suggestions2_body_entered(body):
+	entered = false
+	near = false
+	begin = true
+	end = false
+	$TextEdit5.show()
+	
 
 
-
+func _on_suggestions3_body_entered(body):
+	entered = false
+	near = false
+	begin = false
+	end = true
+	$TextEdit6.show()
